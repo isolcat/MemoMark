@@ -1,0 +1,20 @@
+{
+  "name": "memo-mark",
+  "version": "0.0.1",
+  "description": "MemoMark: Your Markdown-Powered Note-Taking Companion",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "commit": "cz"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^29.1.5"
+  },
+  "dependencies": {
+    "markdown-it": "^14.1.0",
+    "marked": "^12.0.1"
+  }
+}
