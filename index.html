@@ -5,72 +5,102 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Markdown Notepad</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Comic+Neue:300,400,700&display=swap">
   <style>
-    body {
-      display: flex;
-      height: 100vh;
+    body,
+    #app-container {
+      background-color: #FFF8DC;
+      /* 淡黄色背景，模拟便笺纸的颜色 */
+      font-family: 'Comic Neue', Arial, sans-serif;
+      /* 使用更加休闲的字体 */
       margin: 0;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      background-color: #f9f9f7;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #app-container {
+      display: flex;
+      flex: 1;
+      padding: 20px;
+      border: 1px solid #EEDC82;
+      /* 给便笺添加边框 */
+      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+      /* 添加轻微的阴影，增加立体感 */
+      border-radius: 5px;
+      /* 轻微的圆角 */
+      margin: 10px;
+      overflow: hidden;
     }
 
     #markdown-input,
     #markdown-preview {
       flex: 1;
-      padding: 20px;
+      padding: 10px;
       box-sizing: border-box;
-      height: 100%;
       overflow-y: auto;
     }
 
     #markdown-input {
-      border: none;
-      background-color: #fff;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-      margin-right: 20px;
-      font-size: 16px;
-      color: #333;
+      display: none;
+      /* Initially hidden */
     }
 
     #markdown-preview {
-      background-color: #fff;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-      margin-left: 20px;
-      padding-left: 40px;
+      display: block;
+      /* Show preview by default */
+    }
+
+    .toggle-preview {
+      background-color: #FFD700;
+      /* 金色按钮 */
+      font-weight: bold;
+      border: none;
+      color: white;
+      padding: 10px 20px;
       font-size: 16px;
-      color: #333;
-    }
-
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: #f1f1f1;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: #888;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: #555;
+      cursor: pointer;
+      border-radius: 20px;
+      /* 更圆的按钮 */
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+      /* 按钮阴影 */
+      align-self: center;
+      margin: 10px;
     }
   </style>
 </head>
 
 <body>
-  <textarea id="markdown-input" placeholder="Enter Markdown here..."></textarea>
-  <div id="markdown-preview"></div>
+  <div id="app-container">
+    <textarea id="markdown-input" placeholder="Enter Markdown here..."></textarea>
+    <div id="markdown-preview"></div>
+  </div>
+  <button id="toggle-preview" class="toggle-preview">📌 Toggle Preview</button>
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
     const mdInput = document.getElementById('markdown-input');
     const mdPreview = document.getElementById('markdown-preview');
+    const togglePreviewBtn = document.getElementById('toggle-preview');
+
+    let isPreviewOnly = true; // Start with preview only
 
     mdInput.addEventListener('input', function () {
       const renderedHtml = marked.parse(mdInput.value);
       mdPreview.innerHTML = renderedHtml;
+    });
+
+    togglePreviewBtn.addEventListener('click', function () {
+      isPreviewOnly = !isPreviewOnly;
+      if (isPreviewOnly) {
+        mdInput.style.display = 'none';
+        mdPreview.style.display = 'block';
+        togglePreviewBtn.textContent = '✏️ Edit';
+      } else {
+        mdInput.style.display = 'block';
+        mdPreview.style.display = 'none';
+        togglePreviewBtn.textContent = '📌 Preview';
+      }
     });
   </script>
 </body>
