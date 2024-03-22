@@ -7,48 +7,53 @@
   <title>Markdown Notepad</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Comic+Neue:300,400,700&display=swap">
   <style>
-    body,
-    #app-container {
-      background-color: #FFF8DC;
-      /* 淡黄色背景，模拟便笺纸的颜色 */
-      font-family: 'Comic Neue', Arial, sans-serif;
-      /* 使用更加休闲的字体 */
+    body {
       margin: 0;
       height: 100vh;
       display: flex;
       flex-direction: column;
+      font-family: 'Comic Neue', Arial, sans-serif;
+      background-color: #FFF8DC;
+      -webkit-app-region: drag;
+      /* 背景颜色与便笺相同 */
+    }
+
+    #markdown-input,
+    .toggle-preview {
+      -webkit-app-region: no-drag;
     }
 
     #app-container {
       display: flex;
       flex: 1;
       padding: 20px;
-      border: 1px solid #EEDC82;
-      /* 给便笺添加边框 */
-      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
-      /* 添加轻微的阴影，增加立体感 */
-      border-radius: 5px;
-      /* 轻微的圆角 */
-      margin: 10px;
+      box-sizing: border-box;
       overflow: hidden;
     }
 
-    #markdown-input,
+    #markdown-input {
+      flex: 1;
+      background-color: #FFF8DC;
+      /* 输入区域背景颜色 */
+      border: none;
+      /* 去除边框 */
+      outline: none;
+      /* 焦点时无轮廓 */
+      padding: 10px;
+      font-size: 16px;
+      color: #333;
+      resize: none;
+      /* 禁止调整大小 */
+      overflow-y: auto;
+      /* 添加滚动条 */
+    }
+
     #markdown-preview {
+      display: none;
+      /* 默认不显示 */
       flex: 1;
       padding: 10px;
-      box-sizing: border-box;
-      overflow-y: auto;
-    }
-
-    #markdown-input {
-      display: none;
-      /* Initially hidden */
-    }
-
-    #markdown-preview {
-      display: block;
-      /* Show preview by default */
+      border: none;
     }
 
     .toggle-preview {
@@ -58,14 +63,12 @@
       border: none;
       color: white;
       padding: 10px 20px;
+      text-align: center;
       font-size: 16px;
+      margin: 10px auto;
       cursor: pointer;
       border-radius: 20px;
-      /* 更圆的按钮 */
       box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-      /* 按钮阴影 */
-      align-self: center;
-      margin: 10px;
     }
   </style>
 </head>
@@ -83,7 +86,7 @@
     const mdPreview = document.getElementById('markdown-preview');
     const togglePreviewBtn = document.getElementById('toggle-preview');
 
-    let isPreviewOnly = true; // Start with preview only
+    let isPreviewOnly = false; // Start with editor mode
 
     mdInput.addEventListener('input', function () {
       const renderedHtml = marked.parse(mdInput.value);

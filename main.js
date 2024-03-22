@@ -3,8 +3,8 @@ const { app, BrowserWindow } = require('electron');
 function createWindow() {
   // 创建一个无边框的浏览器窗口
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 400,
+    height: 200,
     frame: false, // 设置窗口无边框
     webPreferences: {
       nodeIntegration: true,
