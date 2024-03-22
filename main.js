@@ -1,22 +1,25 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
+const path = require('path');
+
+let win; // 修改变量名以符合下文使用
 
 function createWindow() {
   // 创建一个无边框的浏览器窗口
-  const win = new BrowserWindow({
-    width: 400,
-    height: 200,
+  win = new BrowserWindow({
+    width: 320,
+    height: 320,
     frame: false, // 设置窗口无边框
+    icon: path.join(__dirname, 'assets/MemoMark.icns'),
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false, // 根据Electron版本和安全需求调整
+      contextIsolation: false,
     }
   });
 
-  // 加载应用的index.html
-  win.loadFile('index.html');
-
-  // 打开开发者工具
-  // win.webContents.openDevTools();
+  // 加载应用的index.html，并在加载完成后尝试聚焦窗口
+  win.loadFile('index.html').then(() => {
+    win.focus(); // 窗口加载完成后尝试聚焦窗口
+  });
 }
 
 // 当Electron完成初始化并准备创建浏览器窗口时，调用此函数
@@ -33,5 +36,12 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
+  }
+});
+
+// 监听从渲染进程发来的toggle-pin消息
+ipcMain.on('toggle-pin', (event, shouldPin) => {
+  if (win) {
+    win.setAlwaysOnTop(shouldPin); // 设置窗口是否置顶
   }
 });
