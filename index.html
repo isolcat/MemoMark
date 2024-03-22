@@ -5,107 +5,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Markdown Notepad</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="
+https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.9.0/styles/default.min.css
+" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Comic+Neue:300,400,700&display=swap">
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      font-family: 'Comic Neue', Arial, sans-serif;
-      background-color: #FFF8DC;
-      -webkit-app-region: drag;
-      /* 背景颜色与便笺相同 */
-    }
-
-    #markdown-input,
-    .toggle-preview {
-      -webkit-app-region: no-drag;
-    }
-
-    #app-container {
-      display: flex;
-      flex: 1;
-      padding: 20px;
-      box-sizing: border-box;
-      overflow: hidden;
-    }
-
-    #markdown-input {
-      flex: 1;
-      background-color: #FFF8DC;
-      /* 输入区域背景颜色 */
-      border: none;
-      /* 去除边框 */
-      outline: none;
-      /* 焦点时无轮廓 */
-      padding: 10px;
-      font-size: 16px;
-      color: #333;
-      resize: none;
-      /* 禁止调整大小 */
-      overflow-y: auto;
-      /* 添加滚动条 */
-    }
-
-    #markdown-preview {
-      display: none;
-      /* 默认不显示 */
-      flex: 1;
-      padding: 10px;
-      border: none;
-    }
-
-    .toggle-preview {
-      background-color: #FFD700;
-      /* 金色按钮 */
-      font-weight: bold;
-      border: none;
-      color: white;
-      padding: 10px 20px;
-      text-align: center;
-      font-size: 16px;
-      margin: 10px auto;
-      cursor: pointer;
-      border-radius: 20px;
-      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    }
-  </style>
 </head>
 
 <body>
   <div id="app-container">
     <textarea id="markdown-input" placeholder="Enter Markdown here..."></textarea>
     <div id="markdown-preview"></div>
+    <div class="buttons-container">
+      <button id="toggle-pin" class="toggle-button">📌 Toggle Pin</button>
+      <button id="toggle-preview" class="toggle-button">👌🏻 Preview</button>
+    </div>
   </div>
-  <button id="toggle-preview" class="toggle-preview">📌 Toggle Preview</button>
+
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script>
-    const mdInput = document.getElementById('markdown-input');
-    const mdPreview = document.getElementById('markdown-preview');
-    const togglePreviewBtn = document.getElementById('toggle-preview');
-
-    let isPreviewOnly = false; // Start with editor mode
-
-    mdInput.addEventListener('input', function () {
-      const renderedHtml = marked.parse(mdInput.value);
-      mdPreview.innerHTML = renderedHtml;
-    });
-
-    togglePreviewBtn.addEventListener('click', function () {
-      isPreviewOnly = !isPreviewOnly;
-      if (isPreviewOnly) {
-        mdInput.style.display = 'none';
-        mdPreview.style.display = 'block';
-        togglePreviewBtn.textContent = '✏️ Edit';
-      } else {
-        mdInput.style.display = 'block';
-        mdPreview.style.display = 'none';
-        togglePreviewBtn.textContent = '📌 Preview';
-      }
-    });
-  </script>
+  <script src="renderer.js"></script>
 </body>
 
 </html>
