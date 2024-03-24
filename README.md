@@ -19,6 +19,10 @@ MemoMark is a convenient Markdown-based note-taking application built with Elect
 6. Toggle the live preview mode by clicking the "👌🏻 Preview" button.
 7. Pin the notepad window to keep it always on top by clicking the "📌 Toggle Pin" button.
 
+## Download
+
+[Click this](https://github.com/isolcat/MemoMark/releases/tag/v0.0.1)
+
 ## Technologies Used
 
 - [Electron](https://www.electronjs.org/)
